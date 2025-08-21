@@ -1,3 +1,5 @@
+import HotelProfile from './pages/HotelProfile';
+import HotelBookings from './pages/HotelBookings';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { WalletProvider, createNetworkConfig, SuiClientProvider } from '@mysten/dapp-kit';
 import { getFullnodeUrl } from '@mysten/sui/client';
@@ -12,6 +14,13 @@ import HotelDetailsPage from './pages/HotelDetailsPage';
 import RoomDetailsPage from './pages/RoomDetailsPage';
 import BookingPage from './pages/BookingPage';
 import BookingsPage from './pages/BookingsPage';
+import HotelDashboard from './pages/HotelDashboard';
+import HotelHome from './pages/HotelHome';
+import Hotel from './pages/Hotel';
+import HotelRedirect from './pages/HotelRedirect';
+import HotelRegister from './pages/HotelRegister';
+import UserDashboard from './pages/UserDashboard';
+import HotelRooms from './pages/HotelRooms';
 
 // Configure the network (mainnet, testnet, devnet, or localnet)
 const { networkConfig } = createNetworkConfig({
@@ -33,12 +42,22 @@ function App() {
               {/* Only show sidebar if not on landing page */}
               <Routes>
                 <Route path="/" element={<main className="flex-1"><LandingPage /></main>} />
-                <Route path="/hotels" element={<><SidebarWrapper /><div className="flex-1 flex flex-col min-h-screen"><HotelsPage /></div></>} />
-                <Route path="/hotels/:objectId" element={<div className="flex-1 flex flex-col min-h-screen"><HotelDetailsPage /></div>} />
-                <Route path="/rooms/:roomId" element={<RoomDetailsPage />} />
-                <Route path="/hotel/:hotelId/rooms/:roomId" element={<RoomDetailsPage />} />
-                <Route path="/hotel/:hotelId/rooms/:roomId/book" element={<BookingPage />} />
-                <Route path="/bookings" element={<BookingsPage />} />
+                
+                {/* User Routes - All under UserDashboard */}
+                <Route path="/hotels" element={<><SidebarWrapper /><div className="flex-1 flex flex-col min-h-screen"><UserDashboard /></div></>} />
+                <Route path="/hotels/bookings" element={<><SidebarWrapper /><div className="flex-1 flex flex-col min-h-screen"><UserDashboard /></div></>} />
+                <Route path="/hotels/favorites" element={<><SidebarWrapper /><div className="flex-1 flex flex-col min-h-screen"><UserDashboard /></div></>} />
+                <Route path="/hotels/:hotelId" element={<><SidebarWrapper /><div className="flex-1 flex flex-col min-h-screen"><UserDashboard /></div></>} />
+                
+                {/* Hotel Owner Routes */}
+                <Route path="/hotel" element={<HotelRedirect />} />
+                <Route path="/hotel/:hotelId" element={<HotelDashboard />}>
+                  <Route index element={<HotelHome />} />
+                  <Route path="bookings" element={<HotelBookings />} />
+                  <Route path="rooms" element={<HotelRooms />} />
+                  <Route path="profile" element={<HotelProfile />} />
+                </Route>
+                <Route path="/hotel/register" element={<HotelRegister />} />
               </Routes>
               <ToastContainer theme="dark" position="bottom-right" />
             </div>

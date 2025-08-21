@@ -50,8 +50,8 @@ function BookingPage() {
       setSummaryError(null);
       try {
         const [hotelRes, roomRes] = await Promise.all([
-          apiClient.get(`/hotels/${hotelId}`),
-          apiClient.get(`/hotels/${hotelId}/rooms/${roomId}`)
+          apiClient.get(`/api/hotels/${hotelId}`),
+          apiClient.get(`/api/hotels/${hotelId}/rooms/${roomId}`)
         ]);
         setHotel(hotelRes.data);
         setRoom(roomRes.data);
