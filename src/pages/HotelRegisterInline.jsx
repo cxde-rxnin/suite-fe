@@ -96,32 +96,12 @@ export default function HotelRegisterInline({ account, onRegistered }) {
     <div className="w-full max-w-2xl mx-auto px-4">
       {/* Header Section */}
       <div className="text-center mb-8">
-        <div className="w-20 h-20 bg-sky-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <Building2 className="w-10 h-10 text-sky-400" />
-        </div>
         <h1 className="text-4xl font-bold mb-3 text-white">
           Register Your Hotel
         </h1>
         <p className="text-slate-300 text-lg leading-relaxed max-w-md mx-auto">
           Join the future of hotel booking. Create your hotel profile and start accepting bookings.
         </p>
-      </div>
-
-      {/* Progress Steps */}
-      <div className="flex items-center justify-center mb-8">
-        <div className="flex items-center">
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${
-            step >= 1 ? 'bg-sky-500 border-sky-500 text-white' : 'bg-slate-700 border-slate-600 text-slate-400'
-          }`}>
-            {step > 1 ? <CheckCircle className="w-5 h-5" /> : '1'}
-          </div>
-          <div className={`w-16 h-1 mx-2 ${step >= 2 ? 'bg-sky-500' : 'bg-slate-600'}`}></div>
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${
-            step >= 2 ? 'bg-sky-500 border-sky-500 text-white' : 'bg-slate-700 border-slate-600 text-slate-400'
-          }`}>
-            {step > 2 ? <CheckCircle className="w-5 h-5" /> : '2'}
-          </div>
-        </div>
       </div>
 
       {/* Multi-Step Form Card */}

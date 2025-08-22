@@ -118,7 +118,7 @@ export default function HotelProfile({ account }) {
   };
 
   return (
-    <div className="w-full px-4">
+    <div className="w-full px-4 py-6">
       {/* Header Section */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-white mb-2">Hotel Profile</h1>

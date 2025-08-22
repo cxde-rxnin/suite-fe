@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useAppStore } from '../store/appStore';
 import HotelCard from '../components/HotelCard';
 import { LoaderCircle, Search, Filter, MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import apiClient from '../api/axios';
 
 function HotelsPage() {
   const { hotels, isLoading, fetchHotels } = useAppStore();
@@ -16,6 +18,25 @@ function HotelsPage() {
     hotel.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     hotel.physicalAddress?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const navigate = useNavigate();
+
+  // Fetch rooms for a hotel by id
+  async function fetchRooms(hotelId) {
+    try {
+      const res = await apiClient.get(`/rooms?hotelId=${hotelId}`);
+      return res.data;
+    } catch (err) {
+      console.error('Error fetching rooms:', err);
+      return [];
+    }
+  }
+
+  // Handle hotel card click
+  const handleHotelClick = async (hotel) => {
+    const rooms = await fetchRooms(hotel.objectId || hotel._id);
+    navigate(`/hotel/${hotel.objectId || hotel._id}`, { state: { hotel, rooms } });
+  };
 
   return (
     <div className="w-full px-4">
@@ -38,7 +59,6 @@ function HotelsPage() {
               className="w-full pl-12 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all duration-200"
             />
           </div>
-          
         </div>
       </div>
 
@@ -79,9 +99,12 @@ function HotelsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredHotels.map((hotel, index) => (
             <div 
-              key={hotel.objectId} 
+              key={hotel.objectId || hotel._id} 
               className="animate-fade-in"
               style={{ animationDelay: `${index * 100}ms` }}
+              onClick={() => handleHotelClick(hotel)}
+              role="button"
+              tabIndex={0}
             >
               <HotelCard hotel={hotel} />
             </div>

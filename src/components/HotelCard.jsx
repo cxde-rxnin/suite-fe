@@ -1,7 +1,28 @@
 import { motion } from 'framer-motion';
 import { MapPin, Star, Users } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
 function HotelCard({ hotel }) {
+  // Import useEffect and useState
+
+  const [roomCount, setRoomCount] = useState(null);
+
+  useEffect(() => {
+    async function fetchRoomCount() {
+      try {
+        const id = hotel.objectId || hotel._id;
+        // Change this to your backend URL
+        const backendUrl = import.meta.env.VITE_API_BASE_URL;
+        const res = await fetch(`${backendUrl}/hotels/${id}/rooms`);
+        const data = await res.json();
+        setRoomCount(Array.isArray(data) ? data.length : 0);
+      } catch (err) {
+        setRoomCount(0);
+      }
+    }
+    fetchRoomCount();
+  }, [hotel.objectId, hotel._id]);
+
   return (
     <a href={`/hotels/${hotel.objectId}`} className="block group">
       <motion.div
@@ -37,7 +58,9 @@ function HotelCard({ hotel }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 text-slate-400 text-sm">
               <Users className="w-4 h-4" />
-              <span>{hotel.rooms?.length || 0} rooms</span>
+              <span>
+                {roomCount === null ? 'Loading...' : `${roomCount} rooms`}
+              </span>
             </div>
             
           </div>

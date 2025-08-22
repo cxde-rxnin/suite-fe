@@ -8,7 +8,6 @@ function Header() {
       <nav className="container mx-auto flex items-center justify-between px-4 py-4">
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-2 text-xl font-bold text-white hover:text-sky-400 transition-colors geist-mono">
-            <Hotel className="w-6 h-6 text-sky-400" />
             <span>Sui.te</span>
           </Link>
         </div>

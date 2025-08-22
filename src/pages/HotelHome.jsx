@@ -207,38 +207,6 @@ export default function HotelHome() {
         />
       </div>
 
-      {/* Rooms Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-6 h-6 bg-green-400 rounded-full"></div>
-            <h3 className="text-lg font-semibold text-white">Available</h3>
-          </div>
-          <div className="text-3xl font-bold text-green-400">{rooms.available}</div>
-        </div>
-        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-6 h-6 bg-blue-400 rounded-full"></div>
-            <h3 className="text-lg font-semibold text-white">Clean</h3>
-          </div>
-          <div className="text-3xl font-bold text-blue-400">{rooms.clean}</div>
-        </div>
-        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-6 h-6 bg-yellow-400 rounded-full"></div>
-            <h3 className="text-lg font-semibold text-white">Dirty</h3>
-          </div>
-          <div className="text-3xl font-bold text-yellow-400">{rooms.dirty}</div>
-        </div>
-        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-6 h-6 bg-red-400 rounded-full"></div>
-            <h3 className="text-lg font-semibold text-white">Maintenance</h3>
-          </div>
-          <div className="text-3xl font-bold text-red-400">{rooms.maintenance}</div>
-        </div>
-      </div>
-
       {/* Recent Activity */}
       <div className="mb-8">
         <TransactionList transactions={checkStats.transactions || []} />

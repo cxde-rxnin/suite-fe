@@ -47,6 +47,7 @@ export default function HotelRedirect() {
   if (checking) {
     return <div className="flex flex-1 items-center justify-center h-screen text-slate-400">Loading...</div>;
   }
-  // If connected but no hotel, show intro
-  return <Hotel />;
+  // If connected but no hotel, redirect to registration
+  navigate('/hotel/register');
+  return null;
 }
