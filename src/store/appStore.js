@@ -9,7 +9,7 @@ export const useAppStore = create((set, get) => ({
   fetchHotels: async () => {
     set({ isLoading: true });
     try {
-      const response = await apiClient.get('/hotels/all');
+      const response = await apiClient.get('hotels/all');
       set({ hotels: response.data });
     } catch (error) {
       console.error("Failed to fetch hotels:", error);
@@ -21,7 +21,7 @@ export const useAppStore = create((set, get) => ({
   fetchFavorites: async (userId) => {
     if (!userId) return;
     try {
-      const response = await apiClient.get(`/hotels/favorites?userId=${userId}`);
+      const response = await apiClient.get(`hotels/favorites?userId=${userId}`);
       set({ favoriteRoomIds: response.data.map(fav => fav.roomId) });
     } catch (error) {
       set({ favoriteRoomIds: [] });
@@ -31,7 +31,7 @@ export const useAppStore = create((set, get) => ({
   addFavorite: async (roomId, userId) => {
     if (!roomId || !userId) return;
     try {
-      await apiClient.post(`/hotels/rooms/${roomId}/favorite`, { userId });
+      await apiClient.post(`hotels/rooms/${roomId}/favorite`, { userId });
       get().fetchFavorites(userId);
     } catch {}
   },
@@ -39,7 +39,7 @@ export const useAppStore = create((set, get) => ({
   removeFavorite: async (roomId, userId) => {
     if (!roomId || !userId) return;
     try {
-      await apiClient.delete(`/hotels/rooms/${roomId}/favorite`, { data: { userId } });
+      await apiClient.delete(`hotels/rooms/${roomId}/favorite`, { data: { userId } });
       get().fetchFavorites(userId);
     } catch {}
   },

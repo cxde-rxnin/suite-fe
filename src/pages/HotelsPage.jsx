@@ -63,10 +63,7 @@ function HotelsPage() {
       </div>
 
       {/* Results Summary */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="text-slate-400">
-          {filteredHotels.length} hotel{filteredHotels.length !== 1 ? 's' : ''} found
-        </div>
+      <div className="flex items-center justify-end mb-6">
         <div className="text-slate-400 text-sm">
           Showing {filteredHotels.length} of {hotels.length} total
         </div>

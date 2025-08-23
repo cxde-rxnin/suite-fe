@@ -38,8 +38,14 @@ function BookingPage() {
   const arrival = form.arrivalDate ? new Date(form.arrivalDate) : null;
   const departure = form.departureDate ? new Date(form.departureDate) : null;
   const nights = arrival && departure ? Math.max(1, Math.ceil((departure - arrival) / (1000 * 60 * 60 * 24))) : 0;
-  const serviceFee = room ? Math.round((room.price_per_day || 0) * 0.15) : 0;
-  const subtotal = room ? (room.price_per_day || 0) * nights : 0;
+  // Use both camelCase and snake_case for price field fallback
+  const roomPrice = room ? (room.pricePerDay ?? room.price_per_day ?? 0) : 0;
+  const baseGuestCount = room ? (room.baseGuestCount ?? 1) : 1;
+  const extraGuestFee = room ? (room.extraGuestFee ?? 0) : 0;
+  const numberOfGuests = form.numberOfGuests || 1;
+  const extraGuests = Math.max(0, numberOfGuests - baseGuestCount);
+  const subtotal = (roomPrice * nights) + (extraGuestFee * extraGuests * nights);
+  const serviceFee = room ? (roomPrice * 0.15) : 0;
   const total = subtotal + serviceFee;
   const { paymentCoinId, coinError } = useValidSuiPaymentCoin(total);
   const suiBalance = useSuiBalance();
@@ -50,11 +56,13 @@ function BookingPage() {
       setSummaryError(null);
       try {
         const [hotelRes, roomRes] = await Promise.all([
-          apiClient.get(`/api/hotels/${hotelId}`),
-          apiClient.get(`/api/hotels/${hotelId}/rooms/${roomId}`)
+          apiClient.get(`/hotels/${hotelId}`),
+          apiClient.get(`/hotels/${hotelId}/rooms/${roomId}`)
         ]);
         setHotel(hotelRes.data);
         setRoom(roomRes.data);
+        console.log('Hotel data:', hotelRes.data);
+        console.log('Room data:', roomRes.data);
       } catch (err) {
         setSummaryError('Failed to load booking summary');
         setHotel(null);
@@ -395,7 +403,7 @@ function BookingPage() {
                 </h4>
                 <div className="flex items-center gap-2 text-slate-300 text-base flex-wrap">
                     <span className="break-words">
-                        SUI {room.price_per_day?.toLocaleString()} / night
+                        SUI {(room.pricePerDay ?? room.price_per_day ?? 0).toLocaleString()} / night
                     </span>
                 </div>
             </div>
@@ -415,11 +423,11 @@ function BookingPage() {
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-slate-600">
                   <span className="text-slate-300 font-medium">Room Subtotal</span>
-                  <span className="font-semibold text-white">SUI {subtotal.toLocaleString()}</span>
+                  <span className="font-semibold text-white">SUI {subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-slate-600">
                   <span className="text-slate-300 flex items-center gap-2 font-medium">Service Fee <span className="w-5 h-5 rounded-full border border-slate-400 text-xs flex items-center justify-center text-slate-400 font-bold">i</span></span>
-                  <span className="font-semibold text-white">SUI {serviceFee.toLocaleString()}</span>
+                  <span className="font-semibold text-white">SUI {serviceFee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
               </div>
               {/* Continue Button */}

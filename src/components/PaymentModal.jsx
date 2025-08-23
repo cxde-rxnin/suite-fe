@@ -28,15 +28,14 @@ const PaymentModal = ({ form, total, onClose, onProceed, paymentCoinId, coinErro
         </div>
 
         {/* Content */}
-        <div className="relative p-8">
+        <div className="relative p-2">
           <div className="mb-8">
-              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2 px-3">
                   <User size={18} className="text-blue-400" />
                   Guest Information
               </h3>
               <div className="space-y-4">
-                  <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-800/50 border border-slate-700/30">
-                      <User size={16} className="text-slate-400" />
+                  <div className="flex items-center gap-3 p-3 rounded-xl">
                       <div className="flex items-center gap-6">
                           <div>
                               <div className="text-slate-400 text-xs uppercase tracking-wide">Full Name</div>
@@ -49,8 +48,7 @@ const PaymentModal = ({ form, total, onClose, onProceed, paymentCoinId, coinErro
                       </div>
                   </div>
 
-                  <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-800/50 border border-slate-700/30">
-                      <Mail size={16} className="text-slate-400" />
+                  <div className="flex items-center gap-3 p-3 rounded-xl">
                       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 w-full">
                           <div className="w-full sm:w-auto break-words">
                               <div className="text-slate-400 text-xs uppercase tracking-wide">Email</div>
@@ -65,12 +63,12 @@ const PaymentModal = ({ form, total, onClose, onProceed, paymentCoinId, coinErro
               </div>
           </div>
 
-          <div className="mb-4 text-center">
+          {/* <div className="mb-4 text-center">
             <span className="text-slate-400">Your SUI Balance:</span>
             <span className="text-lg font-bold text-sky-400 ml-2">
               {suiBalance !== null ? suiBalance.toLocaleString() : 'Loading...'} SUI
             </span>
-          </div>
+          </div> */}
           {/* Remove coinError display, rely on bookingService for coin merging */}
 
           <div className="mb-8">
@@ -79,7 +77,7 @@ const PaymentModal = ({ form, total, onClose, onProceed, paymentCoinId, coinErro
                 <span className="text-slate-300 font-medium">Total Amount</span>
                 <div className="text-right">
                   <div className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text">
-                    SUI{total.toLocaleString()}
+                    SUI {total.toLocaleString()}
                   </div>
                 </div>
               </div>

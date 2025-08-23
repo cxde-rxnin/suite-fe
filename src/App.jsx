@@ -48,6 +48,7 @@ function App() {
                 <Route path="/hotels/favorites" element={<><SidebarWrapper /><div className="flex-1 flex flex-col min-h-screen"><UserDashboard /></div></>} />
                 <Route path="/hotels/:hotelId" element={<><SidebarWrapper /><div className="flex-1 flex flex-col min-h-screen"><UserDashboard /></div></>} />
                 <Route path="/hotels/:hotelId/rooms/:roomId" element={<RoomDetailsPage />} />
+                <Route path="/hotels/:hotelId/rooms/:roomId/book" element={<BookingPage />} />
                 {/* Hotel Owner Routes */}
                 <Route path="/hotel" element={<HotelRedirect />} />
                 <Route path="/hotel/:hotelId" element={<HotelDashboard />}> 
